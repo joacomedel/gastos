@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gastos</title>
+  <meta name="description" content="Anotá tus gastos y mirá el total del mes. Los datos quedan en tu Google Sheet." />
+  <meta name="theme-color" content="#F4F5F3" />
+  <style>
+    :root { --bg:#f4f5f3; --panel:#fff; --ink:#14161b; --ink2:#4a505a; --muted:#8b9199; --line:#e4e7e1; --accent:#2b49e0; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:"Hanken Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif; }
+    main { max-width:720px; margin:0 auto; padding:32px 20px 64px; }
+    h1 { font-size:1.4rem; letter-spacing:-.01em; margin:0 0 4px; }
+    .sub { color:var(--ink2); margin:0 0 22px; font-size:.92rem; }
+    .card { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:18px 18px 16px; box-shadow:0 1px 2px rgba(20,22,27,.05); }
+    .total { margin-bottom:16px; }
+    .total-label { font-size:.82rem; color:var(--ink2); font-weight:500; }
+    .total-value { font-size:2.6rem; font-weight:700; letter-spacing:-.02em; line-height:1.1; font-variant-numeric:tabular-nums; }
+    .total-value .unit { font-size:.45em; font-weight:600; color:var(--muted); margin-right:4px; }
+    .total-sub { margin:4px 0 0; font-size:.85rem; color:var(--ink2); }
+    form { display:grid; gap:10px; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); align-items:end; }
+    label { display:grid; gap:6px; font-size:.8rem; color:var(--ink2); }
+    input { width:100%; padding:10px 12px; font:inherit; border:1px solid var(--line); border-radius:10px; background:var(--bg); }
+    input:focus { outline:none; border-color:var(--accent); background:#fff; box-shadow:0 0 0 3px #e9ecfb; }
+    button { padding:11px 16px; font:inherit; font-weight:600; color:#fff; background:var(--accent); border:none; border-radius:10px; cursor:pointer; }
+    button:disabled { opacity:.55; }
+    .status { margin:10px 0 0; font-size:.85rem; color:var(--ink2); min-height:1.1em; }
+    .status.err { color:#c0362c; } .status.ok { color:#1f7a4d; }
+    table { width:100%; border-collapse:collapse; margin-top:18px; }
+    th,td { text-align:left; padding:9px 10px; border-bottom:1px solid var(--line); font-size:.9rem; }
+    th { color:var(--muted); font-size:.76rem; font-weight:600; }
+    td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; }
+    .topbar { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:18px; }
+    .logout { font-size:.8rem; color:var(--ink2); background:none; border:1px solid var(--line); border-radius:999px; padding:5px 12px; cursor:pointer; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="topbar">
+      <h1 id="titulo">Gastos</h1>
+      <button class="logout" id="salir" type="button">Salir</button>
+    </div>
+    <p class="sub" id="sub">Datos en tu Google Sheet, a través del backend bds.</p>
+
+    <section class="card total" aria-labelledby="totalMes">
+      <div class="total-label">Total del mes</div>
+      <div class="total-value"><span class="unit">$</span><span id="totalMes">—</span></div>
+      <p class="total-sub" id="totalSub">Sin datos todavía.</p>
+    </section>
+
+    <section class="card">
+      <form id="form"></form>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+    </section>
+
+    <table id="tabla">
+      <thead><tr id="thead"></tr></thead>
+      <tbody></tbody>
+    </table>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="bt-core.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
